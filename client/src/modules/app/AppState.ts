@@ -6,8 +6,8 @@ const initialState: AppState = {
     isLoading: false,
 };
 
-const ASYNC_START = "header/ASYNC_START";
-const ASYNC_END = "header/ASYNC_END";
+export const ASYNC_START = "ASYNC_START";
+export const ASYNC_END = "ASYNC_END";
 
 export const AppReducer = (state: AppState = initialState, action: any) => {
     switch (action.type) {

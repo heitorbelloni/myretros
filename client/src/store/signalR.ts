@@ -1,6 +1,16 @@
 import { HubConnectionBuilder } from "../../node_modules/@aspnet/signalr";
 import config from "../config";
 import { RetroActionCreators, Retro, GroupCommentModel } from "../modules/retroTabs";
+import { ASYNC_START, ASYNC_END } from "../modules/app";
+import { store } from "./createStore";
+
+const startRequest = () => {
+    store.dispatch({ type: ASYNC_START });
+};
+
+const endRequest = () => {
+    store.dispatch({ type: ASYNC_END });
+};
 
 const hubConnection = new HubConnectionBuilder()
     .withUrl(`${config.apiUrl}/retrohub`)
@@ -15,6 +25,7 @@ export function signalR(store: any) {
     return (next: any) => async (action: any) => {
         switch (action.type) {
             case SignalRActions.JOIN_RETRO:
+                startRequest();
                 hubConnection.invoke("JoinRetro", action.retroId);
                 break;
             case SignalRActions.SAVE_COMMENT:
